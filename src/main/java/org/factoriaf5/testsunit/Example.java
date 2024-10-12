@@ -83,11 +83,11 @@ public class Example {
                 .average()
                 .getAsDouble();
     }
-
-    // 11. Método para convertir una lista de enteros a lista de strings
+    // 11. Método para convertir una lista de strings a string
     public String convertirListaAString(List<String> lista) {
         return lista.stream()
         .map(s -> s == null ? "NULL" : s.toUpperCase()) // Si es null, lo reemplazamos por "NULL"
         .collect(Collectors.joining(","));
     }
+    
 }

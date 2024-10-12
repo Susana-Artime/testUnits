@@ -2,6 +2,7 @@ package org.factoriaf5.testsunit;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -63,32 +64,74 @@ public class ExampleTest{
     @Test
     public void testRevertirCadena() {
         
-        
+        String palabra="gato";
+        String result= example.revertirCadena(palabra);
+        assertEquals("otag", result);
+        assertNotNull(result);
+        assertInstanceOf(String.class, result);
 
     }
     @Test
     public void testFactorial() {
+
+        long result = example.factorial(5);
+        assertEquals(120, result);
+        assertTrue(result > 100);
+        assertFalse(result > 130);
+        assertThrows(IllegalArgumentException.class, () ->example.factorial(-5), "Debe lanzar excepción para número negativo");
+
         
     }
     @Test
     public void testEsPrimo() {
+        boolean resultTrue = example.esPrimo(3);
+        boolean resultFalse = example.esPrimo(-1);
+        assertTrue(resultTrue, "3 es un número primo");
+        assertFalse(resultFalse, "-1 no es un numero primo");
+        
+
         
     }
     @Test
-    public void testMensajeConRetraso() {
-        
+    public void testMensajeConRetraso() throws InterruptedException {
+
+            long startTime = System.currentTimeMillis(); 
+            String result = example.mensajeConRetraso();                  
+            long endTime = System.currentTimeMillis();
+            long elapsedTime = endTime - startTime;
+            assertEquals("Listo después de retraso", result, "El resultado es el esperado.");
+            assertTrue(elapsedTime >= 5000 && elapsedTime < 6000, "El tiempo de ejecución no está dentro del rango esperado.");
     }
     @Test
     public void testConvertirAString() {
         
+        List<Integer> numeros = List.of(14, 24, 34, 44, 54, 64);
+        List<String> result = example.convertirAString(numeros);
+        List<String> resultExpected = Arrays.asList("14", "24", "34", "44", "54","64");
+        assertEquals(resultExpected, result, "La lista de cadenas coincide con la lista esperada.");
+        
     }
     @Test
     public void testCalcularMedia() {
-        
+
+        List<Integer> numeros = List.of(8, 9, 10, 7, 9, 8);
+        List<Integer> numerosVacio = List.of();
+        double result = example.calcularMedia(numeros);
+        assertEquals(8.5, result);
+        assertTrue(result > 8);
+        assertFalse(result > 9);
+        assertThrows(IllegalArgumentException.class, () ->example.calcularMedia(numerosVacio), "Debe lanzar excepción para número negativo");
+
+       
     }
     @Test
     public void testConvertirListaAString() {
         
+        List<String> frutas = List.of("limon", "pera", "manzana", "kiwi", "fresa", "platano");
+        String result = example.convertirListaAString(frutas);
+        
+        
+       
     }
     
      
