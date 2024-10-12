@@ -1,5 +1,4 @@
 package org.factoriaf5.testsunit;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
