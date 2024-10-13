@@ -173,14 +173,13 @@ public class ExampleTest{
 
         List<Integer> numeros = Arrays.asList(8, 9, 10, 7, 9, 8);
         List<Integer> numerosVacio = Arrays.asList();
-        List<Integer> numerosNull = Arrays.asList(null, null, null);
-        double result = example.calcularMedia(numeros);        
+         double result = example.calcularMedia(numeros);        
         assertEquals(8.5, result, "La media debe ser 8.5");
         assertTrue(result > 8);
         assertFalse(result > 9);
         assertInstanceOf(Double.class, result);
         assertThrows(IllegalArgumentException.class, () ->example.calcularMedia(numerosVacio), "Debe lanzar excepción para lista vacia");
-        assertThrows(NullPointerException.class, () ->example.calcularMedia(numerosNull), "Debe lanzar excepción para lista nula");
+        assertThrows(IllegalArgumentException.class, () ->example.calcularMedia(null), "Debe lanzar excepción para lista nula");
        
 
     } 

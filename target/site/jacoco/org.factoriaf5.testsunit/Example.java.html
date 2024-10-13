@@ -52,9 +52,9 @@ import java.util.stream.Collectors;
 <span class="fc bfc" id="L52" title="All 2 branches covered.">        if (numero &lt;= 1) {</span>
 <span class="fc" id="L53">            return false;</span>
         }
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        for (int i = 2; i * i &lt;= numero; i++) {</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">            if (numero % i == 0) {</span>
-<span class="nc" id="L57">                return false;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int i = 2; i * i &lt;= numero; i++) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (numero % i == 0) {</span>
+<span class="fc" id="L57">                return false;</span>
             }
         }
 <span class="fc" id="L60">        return true;</span>
