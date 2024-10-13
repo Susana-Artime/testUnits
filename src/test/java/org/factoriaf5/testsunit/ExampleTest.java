@@ -114,17 +114,36 @@ public class ExampleTest{
     }
     @Test
     public void testEsPrimo() {
-        boolean resultTrue = example.esPrimo(3);
-        boolean resultFalse = example.esPrimo(-1);
-        assertTrue(resultTrue, "3 es un número primo");
+
+        boolean resultTrue=example.esPrimo(3);
+        boolean resultFalse=example.esPrimo(-1);
+        
+        assertTrue(example.esPrimo(3), "3 debería ser primo");
+        assertTrue(example.esPrimo(5), "5 debería ser primo");
+        assertTrue(example.esPrimo(7), "7 debería ser primo");
+        assertTrue(example.esPrimo(13), "13 debería ser primo");
+        assertTrue(example.esPrimo(29), "29 debería ser primo");        
+        assertTrue(example.esPrimo(101), "101 debería ser primo");
+        assertTrue(example.esPrimo(29), "29 debería ser primo");
+        assertTrue(example.esPrimo(101), "101 debería ser primo");
+
+        assertFalse(example.esPrimo(1), "1 no es primo");
+        assertFalse(example.esPrimo(0), "0 no es primo");
+        assertFalse(example.esPrimo(-5), "-5 no es primo");
+        assertFalse(example.esPrimo(4), "4 no es primo");
+        assertFalse(example.esPrimo(9), "9 no es primo");
+        assertFalse(example.esPrimo(12), "12 no es primo");
+        assertFalse(example.esPrimo(100), "100 no es primo");       
         assertFalse(resultFalse, "-1 no es un numero primo");
+        assertFalse(example.esPrimo(9), "9 no es primo, debe ser divisible por 3");
+        assertFalse(example.esPrimo(25), "25 no es primo, debe ser divisible por 5");
+        assertFalse(example.esPrimo(49), "49 no es primo, debe ser divisible por 7");
+       
         assertNotNull(resultTrue);
         assertInstanceOf(Boolean.class, resultTrue);
         assertNotNull(resultFalse);
         assertInstanceOf(Boolean.class, resultFalse);
-        
-
-        
+               
     }
     @Test
     public void testMensajeConRetraso() throws InterruptedException {
