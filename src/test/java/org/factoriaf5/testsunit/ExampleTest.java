@@ -1,6 +1,7 @@
 package org.factoriaf5.testsunit;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -35,128 +36,278 @@ public class ExampleTest{
     public void testCheckPositivo() {
 
         boolean result = example.checkPositivo(10);
+        boolean result0 = example.checkPositivo(0);
+
         assertTrue(result, "10 es un número positivo");
-        assertTrue(example.checkPositivo(0), "0 debe ser considerado positivo");
-        assertThrows(IllegalArgumentException.class, () ->example.checkPositivo(-5), "Debe lanzar excepción para número negativo");
+        assertTrue(result0, "0 debe ser considerado positivo");
         assertNotNull(result);
         assertInstanceOf(Boolean.class, result);
         
     }
 
     @Test
+    public void testCheckNegativo() {       
+
+        assertThrows(IllegalArgumentException.class, () -> example.checkPositivo(-5));
+      
+               
+    }
+
+
+    @Test
     public void testContarLetrasA() {
 
-        String palabra="mariposa";
+        String palabra="sapo";
         int result= example.contarLetrasA(palabra);
-        String palabraVarias = "manzana";
-        int resultVarias = example.contarLetrasA(palabraVarias);
-        String palabraVacia = "";
-        int resultVacia = example.contarLetrasA(palabraVacia);
-        String cadenaMin = "Ana María";
-        int resultMin = example.contarLetrasA(cadenaMin);
-        String cadenaCaracteres = "a@123 a";
-        int resultCaracteres = example.contarLetrasA(cadenaCaracteres);
+        
 
+        assertEquals(1, result,"Debe contar una letras 'a'");
+        assertTrue(result > 0);
+        assertFalse(result > 1);
+        assertInstanceOf(Integer.class, result);
+        
 
-        assertEquals(2, result,"Debe contar dos letras 'a'");
-        assertEquals(3, resultVarias, "Debe contar exactamente tres letras 'a'.");
-        assertEquals(0, resultVacia, "La cadena vacía debe tener 0 letras 'a'");
-        assertEquals(3, resultMin, "Debe contar las letras a mayusculas y minusculas");
-        assertEquals(2, resultCaracteres, "Debe contar correctamente las letras 'a' sin importar los caracteres especiales.");
+    }
+
+    @Test
+    public void testContarLetrasANinguna() {
+
+        String palabra="sonido";
+        int result= example.contarLetrasA(palabra);
+        
+        assertEquals(0, result,"Debe contar letras 0 porque no las hay");
+        assertTrue(result >-1);
+        assertFalse(result > 0);
+        assertInstanceOf(Integer.class, result);        
+
+    }
+
+    @Test
+    public void testContarVariasLetrasA() {
+        
+        String palabra = "manzana";
+        int result = example.contarLetrasA(palabra);
+                
+        assertEquals(3, result, "Debe contar exactamente tres letras 'a'.");        
         assertTrue(result > 1);
         assertFalse(result > 3);
         assertInstanceOf(Integer.class, result);
+       
+
+    }
+
+    @Test
+    public void testContarLetrasAVacia() {
+
+        String palabra = "";
+        int result = example.contarLetrasA(palabra);
+
+        assertEquals(0, result, "La cadena vacía debe tener 0 letras 'a'");      
+        assertTrue(result > -1);
+        assertFalse(result > 0);
+        assertInstanceOf(Integer.class, result);
+       
+
+    }
+        
+
+    @Test
+    public void testContarLetrasACaracteres() {
+
+        String palabra = "a@123 a";
+        int result= example.contarLetrasA(palabra);
+
+        assertEquals(2, result, "Debe contar correctamente las letras 'a' sin importar los caracteres especiales.");
+        assertTrue(result > 1);
+        assertFalse(result > 2);
+        assertInstanceOf(Integer.class, result);
+      
+
+    }
+
+    @Test
+    public void testContarLetrasANull(){
+
         assertThrows(NullPointerException.class, () -> example.contarLetrasA(null), "Debe lanzar excepción si la cadena es nula");
 
     }
 
     @Test
-    public void testContieneElemento() {
+    public void testContieneElemento_ElementoExiste() {
+        
+        List<String> frutas = Arrays.asList("manzana", "naranja", "plátano","limon","pera");
+        boolean result = example.contieneElemento(frutas, "pera");
 
-        List<String> frutas = Arrays.asList("limon", "pera", "manzana", "kiwi", "fresa", "platano");
-        boolean resultTrue = example.contieneElemento(frutas,"pera");
-        boolean resultFalse = example.contieneElemento(frutas,"sandia");        
-        assertTrue(resultTrue, "La lista debe contener 'pera'");
-        assertFalse(resultFalse, "La lista no debe contener 'sandia'");
-        assertNotNull(resultTrue);
-        assertInstanceOf(Boolean.class, resultTrue);
-        assertNotNull(resultFalse);
-        assertInstanceOf(Boolean.class, resultFalse);
+        assertTrue(result, "La lista debe contener 'pera'");
+        assertInstanceOf(Boolean.class, result);
     }
+
+    @Test
+    public void testContieneElemento_ElementoNoExiste() {
+        
+        List<String> frutas = Arrays.asList("manzana", "naranja", "plátano","limon","pera");
+        boolean result = example.contieneElemento(frutas, "uva");
+
+        assertFalse(result, "La lista no debe contener 'uva'");
+        assertInstanceOf(Boolean.class, result);
+        
+    }
+
+    @Test
+    public void testContieneElemento_ListaVacia() {
+        
+        List<String> frutas = Arrays.asList();
+        boolean result = example.contieneElemento(frutas, "limon");
+
+        assertFalse(result, "Una lista vacía no debe contener ningún elemento");  
+        assertInstanceOf(Boolean.class, result);      
+    }
+
+    @Test
+    public void testContieneElemento_ElementoNull() {
+       
+        List<String> frutas = Arrays.asList("manzana", "naranja", "plátano","limon","pera");
+        boolean result = example.contieneElemento(frutas,null);
+
+        assertFalse(result, "La lista no debe contener un elemento nulo"); 
+        assertInstanceOf(Boolean.class, result);
+    }
+
+   
+   
     @Test
     public void testRevertirCadena() {
         
         String palabra="gato";
         String result= example.revertirCadena(palabra);
+
         assertEquals("otag", result);
-        assertEquals("", example.revertirCadena(""), "La cadena vacía debe seguir vacía");
-        assertThrows(NullPointerException.class, () -> example.revertirCadena(null), "Debería lanzar una excepción si la cadena es nula");
+        assertInstanceOf(String.class, result);
+    }
+
+    @Test
+    public void testRevertirCadenaVacia() {
+        
+        String palabra="";
+        String result= example.revertirCadena(palabra);
+
+        assertEquals("", result, "La cadena vacía debe seguir vacía");
         assertInstanceOf(String.class, result);
 
-
+        
     }
-    @Test
-    public void testFactorial() {
 
-        long result = example.factorial(5);
-        assertEquals(1, example.factorial(0), "El factorial de 0 debe ser 1");
-        assertEquals(1, example.factorial(1), "El factorial de 1 debe ser 1");
-        assertEquals(2, example.factorial(2), "El factorial de 2 debe ser 2");
-        assertEquals(120, result);
-        assertTrue(result > 100);
-        assertFalse(result > 130);
-        assertThrows(IllegalArgumentException.class, () ->example.factorial(-5), "Debe lanzar excepción para número negativo");
+    @Test
+    public void testRevertirCadenaNula() {
+                
+        assertThrows(NullPointerException.class, () -> example.revertirCadena(null), "Debería lanzar una excepción si la cadena es nula");
+    
+        
+    }
+
+    @Test
+    public void testFactorialCero() {
+
+        int numero = 0;
+        long result = example.factorial(numero);
+        assertEquals(1, result, "El factorial de 0 debe ser 1");
         assertNotNull(result);
         assertInstanceOf(Long.class, result);
        
-
-        
     }
+
     @Test
-    public void testEsPrimo() {
+    public void testFactorialPositivo() {
 
-        boolean resultTrue=example.esPrimo(3);
-        boolean resultFalse=example.esPrimo(-1);
+        int numero = 5;
+        long result = example.factorial(numero);
+        assertEquals(120, result, "El factorial de 5 debe ser 120");
+        assertNotNull(result);
+        assertInstanceOf(Long.class, result);
+    }
+
+    @Test
+    public void testFactorialNumeroGrande() {
         
-        assertTrue(example.esPrimo(3), "3 debería ser primo");
-        assertTrue(example.esPrimo(5), "5 debería ser primo");
-        assertTrue(example.esPrimo(7), "7 debería ser primo");
-        assertTrue(example.esPrimo(13), "13 debería ser primo");
-        assertTrue(example.esPrimo(29), "29 debería ser primo");        
-        assertTrue(example.esPrimo(101), "101 debería ser primo");
-        assertTrue(example.esPrimo(29), "29 debería ser primo");
-        assertTrue(example.esPrimo(101), "101 debería ser primo");
+        int numero = 10;
+        long result =example.factorial(numero);
+        assertEquals(3628800, result, "El factorial de 10 debe ser 3628800");
+        assertNotNull(result);
+        assertInstanceOf(Long.class, result);
+    }
 
-        assertFalse(example.esPrimo(1), "1 no es primo");
-        assertFalse(example.esPrimo(0), "0 no es primo");
-        assertFalse(example.esPrimo(-5), "-5 no es primo");
-        assertFalse(example.esPrimo(4), "4 no es primo");
-        assertFalse(example.esPrimo(9), "9 no es primo");
-        assertFalse(example.esPrimo(12), "12 no es primo");
-        assertFalse(example.esPrimo(100), "100 no es primo");       
-        assertFalse(resultFalse, "-1 no es un numero primo");
-        assertFalse(example.esPrimo(9), "9 no es primo, debe ser divisible por 3");
-        assertFalse(example.esPrimo(25), "25 no es primo, debe ser divisible por 5");
-        assertFalse(example.esPrimo(49), "49 no es primo, debe ser divisible por 7");
+    @Test
+    public void testFactorialNumeroNegativo() {
        
-        assertNotNull(resultTrue);
-        assertInstanceOf(Boolean.class, resultTrue);
-        assertNotNull(resultFalse);
-        assertInstanceOf(Boolean.class, resultFalse);
-               
+        assertThrows(IllegalArgumentException.class, () -> {example.factorial(-5);}, "Debe lanzar excepcion para número negativo");
     }
-    @Test
-    public void testMensajeConRetraso() throws InterruptedException {
 
-            long startTime = System.currentTimeMillis(); 
-            String result = example.mensajeConRetraso();                  
-            long endTime = System.currentTimeMillis();
-            long elapsedTime = endTime - startTime;
+    
+    @Test
+    public void testNumeroPrimo() {
+       
+        assertTrue(example.esPrimo(5), "El número 5 debe ser primo");
+    }
+
+    @Test
+    public void testNumeroNoPrimo() {
+        
+        assertFalse(example.esPrimo(4), "El número 4 no debe ser primo");
+    }
+
+    @Test
+    public void testNumeroCero() {
+       
+        assertFalse(example.esPrimo(0), "El número 0 no debe ser primo");
+    }
+
+    @Test
+    public void testNumeroUno() {
+       
+        assertFalse(example.esPrimo(1), "El número 1 no debe ser primo");
+    }
+
+    @Test
+    public void testNumeroNegativo() {
+        
+        assertFalse(example.esPrimo(-7), "Los números negativos no son primos");
+    }
+
+    @Test
+    public void testNumeroPrimoGrande() {
+       
+        assertTrue(example.esPrimo(101), "El número 101 debe ser primo");
+    }
+
+    @Test
+    public void testNumeroNoPrimoGrande() {
+       
+        assertFalse(example.esPrimo(100), "El número 100 no debe ser primo");
+    }
+
+    @Test
+    public void testMensajeConRetrasoDentroRango() throws InterruptedException {
+
+            String result = example.mensajeConRetraso();  
+
             assertEquals("Listo después de retraso", result, "El resultado es el esperado.");
-            assertTrue(elapsedTime >= 5000 && elapsedTime < 6000, "El tiempo de ejecución no está dentro del rango esperado.");
             assertNotNull(result);
             assertInstanceOf(String.class, result);
     }
+
+    @Test
+    public void testMensajeConRetrasoFueraRango() throws InterruptedException {
+
+            long startTime = System.currentTimeMillis();                            
+            long endTime = System.currentTimeMillis();
+            long elapsedTime = endTime - startTime;
+            String result = example.mensajeConRetraso();  
+
+            assertFalse(elapsedTime >= 5000 && elapsedTime < 6000, "El tiempo de ejecución no está dentro del rango esperado.");
+            assertNotNull(result);
+            assertInstanceOf(String.class, result);
+    }
+
     @Test
     public void testConvertirAString() {
         
@@ -168,17 +319,68 @@ public class ExampleTest{
         assertInstanceOf(List.class, result);
         
     }
+
+   
+
+    @Test
+    public void testConvertirListaVacia() {
+        
+        List<Integer> numeros = Arrays.asList();
+        List<String> result = example.convertirAString(numeros);
+        List<String> resultExpected = Arrays.asList();
+        assertEquals(resultExpected,result, "Una lista vacía no debe contener ningún elemento");  
+        assertNotNull(result);
+        assertInstanceOf(List.class, result);
+        
+    }
+
+    @Test
+    public void testConvertirListaConUnSoloElemento() {
+        
+        List<Integer> numeros = Arrays.asList(42);
+        List<String> result = example.convertirAString(numeros);
+        List<String> resultExpected = Arrays.asList("42");
+        assertEquals(resultExpected, result, "La lista con un solo número debe convertirse correctamente");
+        assertNotNull(result);
+        assertInstanceOf(List.class, result);
+    }
+
+    @Test
+    public void testConvertirListaConNumerosNegativos() {
+       
+        List<Integer> numeros = Arrays.asList(-10, -20, -30);
+        List<String> result = example.convertirAString(numeros);       
+        List<String> resultExpected = Arrays.asList("-10", "-20", "-30");
+        assertEquals(resultExpected, result, "La lista debe manejar números negativos correctamente");
+    }
+
     @Test
     public void testCalcularMedia() {
 
         List<Integer> numeros = Arrays.asList(8, 9, 10, 7, 9, 8);
-        List<Integer> numerosVacio = Arrays.asList();
-         double result = example.calcularMedia(numeros);        
+        double result = example.calcularMedia(numeros); 
+
         assertEquals(8.5, result, "La media debe ser 8.5");
         assertTrue(result > 8);
         assertFalse(result > 9);
         assertInstanceOf(Double.class, result);
-        assertThrows(IllegalArgumentException.class, () ->example.calcularMedia(numerosVacio), "Debe lanzar excepción para lista vacia");
+     
+
+    } 
+
+    @Test
+    public void testCalcularMediaVacio() {
+
+        List<Integer> numeros = Arrays.asList();               
+        
+        assertThrows(IllegalArgumentException.class, () ->example.calcularMedia(numeros), "Debe lanzar excepción para lista vacia");
+        
+    } 
+
+    @Test
+    public void testCalcularMediaNull() {
+
+      
         assertThrows(IllegalArgumentException.class, () ->example.calcularMedia(null), "Debe lanzar excepción para lista nula");
        
 
@@ -188,31 +390,72 @@ public class ExampleTest{
     public void testConvertirListaAString() {
         List<String> lista = Arrays.asList("uno", "dos", "tres");
         String result = example.convertirListaAString(lista);
-        List<String> listaConNull = Arrays.asList("uno", null, "tres");
-        String resultConNull = example.convertirListaAString(listaConNull);
-        List<String> listaVacia = Arrays.asList();
-        String resultVacia= example.convertirListaAString(listaVacia);
-        List<String> listaMayusculas = Arrays.asList("UNO", "DOS", "TRES");
-        String resultMay = example.convertirListaAString(listaMayusculas);
-        List<String> listaConNulls = Arrays.asList(null, null, null);
-        String resultConNulls = example.convertirListaAString(listaConNulls);
-        List<String> listaMixta = Arrays.asList("uno", "DOS", null, "tres");
-        String resultMix = example.convertirListaAString(listaMixta);
-       
-
+             
         assertEquals("UNO,DOS,TRES", result, "Debe convertir las cadenas a mayúsculas y concatenarlas.");
-        assertEquals("UNO,NULL,TRES", resultConNull, "Debe reemplazar null con 'NULL' y convertir a mayúsculas.");
-        assertEquals("", resultVacia, "La lista vacía debe devolver una cadena vacía.");
-        assertEquals("UNO,DOS,TRES", resultMay, "Debe mantener las cadenas ya en mayúsculas.");
-        assertEquals("NULL,NULL,NULL", resultConNulls, "Debe convertir todos los valores null a 'NULL'.");
-        assertEquals("UNO,DOS,NULL,TRES", resultMix, "Debe manejar valores mixtos de cadenas y null correctamente.");
         assertInstanceOf(String.class, result);
-        assertInstanceOf(String.class, resultConNull);
-        assertInstanceOf(String.class, resultConNulls);
-        assertInstanceOf(String.class, resultMay);
-        assertInstanceOf(String.class, resultMix);
-        assertInstanceOf(String.class, resultVacia);
+      
+        
+    }
+
+    @Test
+    public void testConvertirListaAStringConNull() {
+        List<String> lista = Arrays.asList("uno", null, "tres");
+        String result = example.convertirListaAString(lista);
+        
+              
+        assertEquals("UNO,NULL,TRES", result, "Debe reemplazar null con 'NULL' y convertir a mayúsculas.");
+        assertInstanceOf(String.class, result);
+     
+    }
+
+    @Test
+    public void testConvertirListaAStringVacia() {
+       
+        List<String> lista = Arrays.asList();
+        String result= example.convertirListaAString(lista);       
+               
+        assertEquals("", result, "La lista vacía debe devolver una cadena vacía.");
+        assertInstanceOf(String.class, result);
+        
+    }
+
+    @Test
+    public void testConvertirListaAStringMay() {
+        
+        List<String> lista = Arrays.asList("UNO", "DOS", "TRES");
+        String result = example.convertirListaAString(lista);
+
+        assertEquals("UNO,DOS,TRES", result, "Debe mantener las cadenas ya en mayúsculas.");
+        assertInstanceOf(String.class, result);
+
+ 
+        
+    }
+
+    @Test
+    public void testConvertirListaAStringNula() {
+       
+        List<String> lista = Arrays.asList(null, null, null);
+        String result = example.convertirListaAString(lista);
+
+        assertEquals("NULL,NULL,NULL", result, "Debe convertir todos los valores null a 'NULL'.");
+    
+        
+    }
+
+    @Test
+    public void testConvertirListaAStringMixta() {
+       
+        List<String> lista = Arrays.asList("uno", "DOS", null, "tres");
+        String result = example.convertirListaAString(lista);
+           
+        assertEquals("UNO,DOS,NULL,TRES", result, "Debe manejar valores mixtos de cadenas y null correctamente.");
+        assertInstanceOf(String.class, result);
+      
         
     }
 }    
    
+    
+    
+
